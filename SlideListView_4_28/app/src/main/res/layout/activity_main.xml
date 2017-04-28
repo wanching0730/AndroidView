@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.student0.www.slidelistview_4_28.MainActivity">
+
+    <com.student0.www.slidelistview_4_28.SlideListView
+        android:id="@+id/slideView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.student0.www.slidelistview_4_28.SlideListView>
+
+</android.support.constraint.ConstraintLayout>
