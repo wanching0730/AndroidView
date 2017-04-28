@@ -11,20 +11,20 @@ public class MainActivity extends AppCompatActivity {
     private SlideAdapter slideAdapter;
     private SlideListView slideListView;
 
-    private List<String> strings = new ArrayList<>();
+    private List<String> data = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        slideAdapter = new SlideAdapter(this, strings, slideListView);
+        slideAdapter = new SlideAdapter(this, data, slideListView);
         slideListView.setAdapter(slideAdapter);
     }
 
     private void init() {
         for (int i = 0; i < 20 ; i++){
-            strings.add(String.valueOf(i));
+            data.add(String.valueOf(i));
         }
         slideListView = (SlideListView) findViewById(R.id.slideView);
     }

@@ -71,7 +71,6 @@ public class SlideAdapter extends BaseAdapter {
         });
         return convertView;
     }
-
     class Holder{
         TextView tv_content;
         TextView tv_delete;
