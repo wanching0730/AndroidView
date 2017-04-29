@@ -26,10 +26,14 @@ public class DiffSizeTextView extends View {
 
     private final String CLASS_MATCH_ERROR = "class don't match";
 
-    private int charCount;
-    private float specialSize;
+    private int charCount;  //前半部分String的length()
+    private float specialSize;  //前半部String的textSize
     private int gravity;
-    private float normalSize;
+    private float normalSize;   //后半部分String的textSize
+    private String text;    //内容
+    private float gap;  //前后内容的间隔
+
+    private final int DEFAULT_TEXT_SIZE = 20;
 
     public DiffSizeTextView(Context context) {
         super(context);
@@ -49,9 +53,11 @@ public class DiffSizeTextView extends View {
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.DiffSizeTextView);
         charCount = array.getInteger(R.styleable.DiffSizeTextView_char_count, 0);
-        specialSize = array.getDimensionPixelSize(R.styleable.DiffSizeTextView_special_size, 20);
+        specialSize = array.getDimensionPixelSize(R.styleable.DiffSizeTextView_special_size, DEFAULT_TEXT_SIZE);
         gravity = array.getInteger(R.styleable.DiffSizeTextView_gravity, SelfGravity.CENTER_VERTICAL);
-        normalSize = array.getDimensionPixelSize(R.styleable.DiffSizeTextView_normal_size, 20);
+        normalSize = array.getDimensionPixelSize(R.styleable.DiffSizeTextView_normal_size, DEFAULT_TEXT_SIZE);
+        text = array.getString(R.styleable.DiffSizeTextView_text);
+        gap  = array.getDimensionPixelSize(R.styleable.DiffSizeTextView_gap, DEFAULT_TEXT_SIZE);
     }
     @Override
     protected void onDraw(Canvas canvas) {
@@ -60,30 +66,32 @@ public class DiffSizeTextView extends View {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.RED);
         paint.setTextSize(specialSize);
-        String testString = "这是测试用的String";
 
 
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
 
         Rect rect_special = new Rect();
         Rect rect_normal = new Rect();
+        if (text == null) return;
+        paint.getTextBounds(text, 0, charCount, rect_special);    //测量特殊字符的Rect占位
 
-        paint.getTextBounds(testString, 0, charCount, rect_special);    //测量特殊字符的Rect占位
-
-        float baseline = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2
+        float baseline_special = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2
                             - fontMetrics.top;
         if (charCount != 0 ){
             canvas.drawText(
-                    testString.substring(0, charCount),
-                    getPaddingLeft(), baseline ,
+                    text.substring(0, charCount),
+                    getPaddingLeft(), baseline_special ,
                     paint);    //画特殊字符
         }
         paint.setTextSize(normalSize);
-        paint.getTextBounds(testString, charCount, testString.length(), rect_normal);
+        paint.getTextBounds(text, charCount, text.length(), rect_normal);
+        fontMetrics = paint.getFontMetrics();
+        float baseline_normal = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2
+                - fontMetrics.top;
         canvas.drawText(
-                testString.substring(charCount, testString.length()),
-                getPaddingLeft() + rect_special.width(),
-                baseline , paint);
+                text.substring(charCount, text.length()),
+                getPaddingLeft() + rect_special.width() + gap,
+                baseline_normal , paint);
     }
 
 

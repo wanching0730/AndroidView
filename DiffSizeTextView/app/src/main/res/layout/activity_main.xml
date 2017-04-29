@@ -8,11 +8,13 @@
     android:orientation="vertical">
 
 <com.student0.www.diffsizetextview.DiffSizeTextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
     android:paddingLeft="20dp"
     app:char_count="2"
     app:special_size="32sp"
-    app:normal_size="12sp"
+    app:normal_size="20sp"
+    app:gap="5dp"
+    app:text="@string/app_name"
     />
 </LinearLayout>
