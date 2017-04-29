@@ -14,6 +14,7 @@
         <attr name="normal_size" format="dimension"/>
         <attr name="gravity" format="integer"/>
         <attr name="text" format="string"/>
-        <attr name="gap" format="dimension"></attr>
+        <attr name="gap" format="dimension"/>
+        <attr name="textColor" format="color"/>
     </declare-styleable>
 </resources>

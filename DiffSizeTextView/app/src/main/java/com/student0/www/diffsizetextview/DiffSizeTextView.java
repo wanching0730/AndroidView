@@ -32,7 +32,7 @@ public class DiffSizeTextView extends View {
     private float normalSize;   //后半部分String的textSize
     private String text;    //内容
     private float gap;  //前后内容的间隔
-
+    private int color;
     private final int DEFAULT_TEXT_SIZE = 20;
 
     public DiffSizeTextView(Context context) {
@@ -58,13 +58,14 @@ public class DiffSizeTextView extends View {
         normalSize = array.getDimensionPixelSize(R.styleable.DiffSizeTextView_normal_size, DEFAULT_TEXT_SIZE);
         text = array.getString(R.styleable.DiffSizeTextView_text);
         gap  = array.getDimensionPixelSize(R.styleable.DiffSizeTextView_gap, DEFAULT_TEXT_SIZE);
+        color = array.getColor(R.styleable.DiffSizeTextView_textColor, Color.BLACK);
     }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.RED);
+        paint.setColor(color);
         paint.setTextSize(specialSize);
 
 
@@ -93,8 +94,6 @@ public class DiffSizeTextView extends View {
                 getPaddingLeft() + rect_special.width() + gap,
                 baseline_normal , paint);
     }
-
-
 }
 class SelfGravity{
     public static final int TOP = 1;

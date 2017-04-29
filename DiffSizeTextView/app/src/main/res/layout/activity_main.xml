@@ -16,5 +16,6 @@
     app:normal_size="20sp"
     app:gap="5dp"
     app:text="@string/app_name"
+    app:textColor="@color/colorAccent"
     />
 </LinearLayout>
