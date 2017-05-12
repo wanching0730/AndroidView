@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.DisplayMetrics;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.io.FileInputStream;
@@ -24,7 +26,6 @@ public class Load {
     private final static Type TYPE = Type.FILO;
 
     private static Load mInstance;
-    private static Type type;
     private ExecutorService threadPool;
 
     private Thread loopThread;
@@ -34,15 +35,18 @@ public class Load {
         @Override
         public void handleMessage(Message msg) {
             Holder holder = (Holder) msg.obj;
-            if (holder.imageView.getTag().equals(holder.path)){
-                holder.imageView.setImageBitmap(holder.bitmap);
+            Bitmap bm = holder.bitmap;
+            ImageView imageView = holder.imageView;
+            String path = holder.path;
+            if(imageView.getTag().toString().equals(path)){
+                imageView.setImageBitmap(bm);
             }
         }
     };
     private Semaphore threadPoolTaskSemaphore;
     private Semaphore mHandlerSemaphore;
 
-    private Load(int threadCount, Type type){
+    private Load(int threadCount, final Type type){
         loopThread = new Thread(){
             @Override
             public void run() {
@@ -55,14 +59,14 @@ public class Load {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        threadPool.execute(getTask());
+                        threadPool.execute(getTask(type));
                     }
                 };
+                mHandlerSemaphore.release();
                 Looper.loop();
             }
         };
         loopThread.start();
-        this.type = type;
         threadPool = Executors.newFixedThreadPool(threadCount);
         threadPoolTaskSemaphore = new Semaphore(threadCount);
         mHandlerSemaphore = new Semaphore(0);
@@ -72,7 +76,7 @@ public class Load {
         if (mInstance == null){
             synchronized (Load.class){
                 if (mInstance == null){
-                    mInstance = new Load(THREAD_COUNT, type);
+                    mInstance = new Load(THREAD_COUNT, Type.FILO);
                 }
             }
         }
@@ -91,11 +95,11 @@ public class Load {
         mHandler.sendEmptyMessage(0x010);
     }
 
-    private synchronized Runnable getTask(){
+    private synchronized Runnable getTask(Type type){
         if (type == Type.FIFO){
             return taskQuene.removeLast();
         }else if (type == Type.FILO){
-            return taskQuene.getFirst();
+            return taskQuene.removeFirst();
         }else {
             return null;
         }
@@ -120,12 +124,20 @@ public class Load {
             final int height = options.outHeight;
             int inSampleSize = 1;
 
+//            if (height > reqHeight || width > reqWidth) {
+//
+//                final int heightRatio = Math.round((float) height / (float) reqHeight);
+//                final int widthRatio = Math.round((float) width / (float) reqWidth);
+//
+//                inSampleSize = heightRatio > widthRatio ? heightRatio : widthRatio;
+//            }
+
             if (height > reqHeight || width > reqWidth) {
-
-                final int heightRatio = Math.round((float) height / (float) reqHeight);
-                final int widthRatio = Math.round((float) width / (float) reqWidth);
-
-                inSampleSize = heightRatio > widthRatio ? heightRatio : widthRatio;
+                if (width > height) {
+                    inSampleSize = Math.round(height / reqHeight);
+                } else {
+                    inSampleSize = Math.round(width / reqWidth);
+                }
             }
 
             options.inJustDecodeBounds = false;
@@ -144,17 +156,20 @@ public class Load {
     }
 
     public void loadImage(final ImageView imageView, final String path){
-
-        final int width = imageView.getWidth();
-        int height = imageView.getHeight();
-
+        imageView.setImageBitmap(null); //防止闪屏
         imageView.setTag(path);
+        if (mUIHandler == null){
+
+        }
+//        final int width = imageView.getWidth();
+//        final int height = imageView.getHeight();
+        final ImageSize imageSize = getImageViewSize(imageView);
         Bitmap bitmap = getBitmapFormCache(path);
         if (bitmap == null){
             addTask(new Runnable() {
                 @Override
                 public void run() {
-                    Bitmap bp = readBitmapFromFileDescriptor(path, width, width);
+                    Bitmap bp = readBitmapFromFileDescriptor(path, imageSize.width, imageSize.height);
                     saveBitmapToCache(path, bp);
                     Holder holder = new Holder();
                     holder.bitmap = bp;
@@ -168,11 +183,67 @@ public class Load {
                 }
             });
         }else {
-            imageView.setImageBitmap(bitmap);
+            Holder holder = new Holder();
+            holder.bitmap = bitmap;
+            holder.imageView = imageView;
+            holder.path = path;
+
+            Message message = Message.obtain();
+            message.obj = holder;
+            mUIHandler.sendMessage(message);
         }
 
     }
+    /**
+     * 根据ImageView获得适当的压缩的宽和高对图片进行压缩，防止内存溢出
+     * */
+    private ImageSize getImageViewSize(ImageView imageView) {
+        ImageSize imageSize = new ImageSize();
 
+        //获取屏幕的宽度
+        /**
+         * 判断并获取实际的
+         * 判断并获取布局中的
+         * 判断并获取最大的
+         * 上述都没设置则压缩为最大屏幕的
+         * */
+        DisplayMetrics displayMetrics = imageView.getContext().getResources().getDisplayMetrics();
+
+        ViewGroup.LayoutParams lp = imageView.getLayoutParams();
+
+        //压缩宽度
+        int width = imageView.getWidth();
+        if (width <= 0){
+            width = lp.width; //获得imageView再layout中声明的宽度
+        }
+        if (width <= 0){
+            width = imageView.getMaxWidth();//检查最大值
+        }
+        if(width <= 0){
+            width = displayMetrics.widthPixels;
+        }
+        //压缩高度
+        int height = imageView.getHeight();
+        if (height <= 0){
+            height = lp.height; //获得imageView再layout中声明的宽度
+        }
+        if (height <= 0){
+            height = imageView.getMaxHeight();//检查最大值
+        }
+        if(height <= 0){
+            height = displayMetrics.heightPixels;
+        }
+
+
+        imageSize.height = height;
+        imageSize.width = width;
+        return imageSize;
+    }
+
+    private class ImageSize{
+        int width;
+        int height;
+    }
    class Holder{
        Bitmap bitmap;
        String path;

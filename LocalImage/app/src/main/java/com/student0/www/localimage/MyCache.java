@@ -32,7 +32,7 @@ public class MyCache {
         cache = new LruCache<String, Bitmap>(size){
             @Override
             protected int sizeOf(String key, Bitmap value) {
-                return super.sizeOf(key, value);
+                return value.getRowBytes() * value.getHeight();
             }
         };
     }
