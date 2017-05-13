@@ -10,7 +10,9 @@
 	<li><a href="https://github.com/jiarWang/AndroidView/blob/master/SlideListView_4_28/app/src/main/java/com/student0/www/slidelistview_4_28/SlideListView.java">高仿QQ滑动删除item功能效果</a>
 		<ol>
 			<li>按照上述链接将SlideListView源码拷贝进项目</li>
-			<li>SlideAdapter与正常自定义的adapter有一点要修改的地方：a--需要将slideListView实例传进来， b--在数据删除后执行listView.turnToNormal();notifyDataSetChanged();以达到删除效果</li>
+			<li>SlideAdapter与正常自定义的adapter有一点要修改的地方：
+				<br/>a--需要将slideListView实例传进来， 
+				<br/>b--在数据删除后执行listView.turnToNormal();notifyDataSetChanged();以达到删除效果</li>
 </ol></li>
 	<li><a href=""></a></li>
 	</ul>
