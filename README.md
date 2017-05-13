@@ -14,5 +14,6 @@
 				<br/>a--需要将slideListView实例传进来， 
 				<br/>b--在数据删除后执行listView.turnToNormal();notifyDataSetChanged();以达到删除效果</li>
 </ol></li>
-	<li><a href=""></a></li>
+	<li><a href="https://github.com/jiarWang/AndroidView/tree/master/DiffSizeTextView">前后字体样式不同的自定义TextView</a></li>
+	<li><a href="https://github.com/jiarWang/AndroidView/tree/master/LocalImage">利用多线程与缓存加载显示本地图片，解决RecycleView卡顿问题</a></li>
 	</ul>
