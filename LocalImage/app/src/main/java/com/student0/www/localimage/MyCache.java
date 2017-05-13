@@ -13,7 +13,7 @@ public class MyCache {
     private static MyCache mInstance;
     private final int PER_FOR = 4;
 
-    public static MyCache getInstacne(){
+    public static MyCache getInstance(){
         if (mInstance == null){
             synchronized (MyCache.class){
                 if (mInstance == null){

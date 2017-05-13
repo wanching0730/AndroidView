@@ -105,11 +105,11 @@ public class Load {
     }
 
     private Bitmap getBitmapFormCache(String path) {
-        return MyCache.getInstacne().getCache().get(path);
+        return MyCache.getInstance().getCache().get(path);
     }
 
     private void saveBitmapToCache(String path, Bitmap bitmap){
-        MyCache.getInstacne().getCache().put(path, bitmap);
+        MyCache.getInstance().getCache().put(path, bitmap);
     }
 
     private Bitmap readBitmapFromFileDescriptor(String filePath, int reqWidth, int reqHeight) {
