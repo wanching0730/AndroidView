@@ -5,7 +5,7 @@
 闲来无事做，不如自定义。
 </br>
 注意：Android >= 5.0，拷贝快链源码即可使用
-<ul>
+<ol>
 	<li>
 		<a href="https://github.com/jiarWang/AndroidView/blob/master/MyCircleImgView/app/src/main/java/com/student0/www/mycircleimgview/CircularImageView.java">自定义原图带Padding的ImageView</a>
 		<ul style="list-style-type:none">
@@ -23,4 +23,4 @@
 </ul></li>
 	<li><a href="https://github.com/jiarWang/AndroidView/tree/master/DiffSizeTextView">前后字体样式不同的自定义TextView</a></li>
 	<li><a href="https://github.com/jiarWang/AndroidView/tree/master/LocalImage">利用多线程与缓存加载显示本地图片，解决RecycleView卡顿问题</a></li>
-	</ul>
+	</ol>
