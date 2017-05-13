@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -39,6 +40,7 @@ public class Load {
             String path = holder.path;
             if(imageView.getTag().toString().equals(path)){
                 imageView.setImageBitmap(bm);
+                imageView.setVisibility(View.VISIBLE);
             }
         }
     };
@@ -146,7 +148,8 @@ public class Load {
     }
 
     public void loadImage(final ImageView imageView, final String path){
-        imageView.setImageBitmap(null); //防止闪屏
+        //imageView.setImageBitmap(null); //防止闪屏
+        imageView.setVisibility(View.GONE);
         imageView.setTag(path);
         final ImageSize imageSize = getImageViewSize(imageView);
         Bitmap bitmap = getBitmapFormCache(path);
