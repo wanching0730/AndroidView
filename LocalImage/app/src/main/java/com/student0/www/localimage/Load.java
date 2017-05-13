@@ -23,7 +23,6 @@ import java.util.concurrent.Semaphore;
 public class Load {
 
     private final static int THREAD_COUNT = 4;
-    private final static Type TYPE = Type.FILO;
 
     private static Load mInstance;
     private ExecutorService threadPool;
@@ -123,22 +122,14 @@ public class Load {
             final int width = options.outWidth;
             final int height = options.outHeight;
             int inSampleSize = 1;
-
+            inSampleSize = Math.max(height/reqHeight, width/reqWidth);
 //            if (height > reqHeight || width > reqWidth) {
-//
-//                final int heightRatio = Math.round((float) height / (float) reqHeight);
-//                final int widthRatio = Math.round((float) width / (float) reqWidth);
-//
-//                inSampleSize = heightRatio > widthRatio ? heightRatio : widthRatio;
+//                if (width > height) {
+//                    inSampleSize = Math.round(height / reqHeight);
+//                } else {
+//                    inSampleSize = Math.round(width / reqWidth);
+//                }
 //            }
-
-            if (height > reqHeight || width > reqWidth) {
-                if (width > height) {
-                    inSampleSize = Math.round(height / reqHeight);
-                } else {
-                    inSampleSize = Math.round(width / reqWidth);
-                }
-            }
 
             options.inJustDecodeBounds = false;
             options.inSampleSize = inSampleSize;
@@ -150,7 +141,6 @@ public class Load {
     }
 
 
-
     enum Type{
         FIFO, FILO
     }
@@ -158,41 +148,34 @@ public class Load {
     public void loadImage(final ImageView imageView, final String path){
         imageView.setImageBitmap(null); //防止闪屏
         imageView.setTag(path);
-        if (mUIHandler == null){
-
-        }
-//        final int width = imageView.getWidth();
-//        final int height = imageView.getHeight();
         final ImageSize imageSize = getImageViewSize(imageView);
         Bitmap bitmap = getBitmapFormCache(path);
         if (bitmap == null){
+            //Add runnable to taskQueue;
             addTask(new Runnable() {
                 @Override
                 public void run() {
                     Bitmap bp = readBitmapFromFileDescriptor(path, imageSize.width, imageSize.height);
                     saveBitmapToCache(path, bp);
-                    Holder holder = new Holder();
-                    holder.bitmap = bp;
-                    holder.imageView = imageView;
-                    holder.path = path;
-
-                    Message message = Message.obtain();
-                    message.obj = holder;
-                    mUIHandler.sendMessage(message);
+                    refreshUI(bp, imageView, path);
                     threadPoolTaskSemaphore.release();
                 }
             });
         }else {
-            Holder holder = new Holder();
-            holder.bitmap = bitmap;
-            holder.imageView = imageView;
-            holder.path = path;
-
-            Message message = Message.obtain();
-            message.obj = holder;
-            mUIHandler.sendMessage(message);
+            refreshUI(bitmap, imageView, path);
         }
 
+    }
+
+    private void refreshUI(Bitmap bitmap, ImageView imageView, String path){
+        Holder holder = new Holder();
+        holder.bitmap = bitmap;
+        holder.imageView = imageView;
+        holder.path = path;
+
+        Message message = Message.obtain();
+        message.obj = holder;
+        mUIHandler.sendMessage(message);
     }
     /**
      * 根据ImageView获得适当的压缩的宽和高对图片进行压缩，防止内存溢出
@@ -200,13 +183,6 @@ public class Load {
     private ImageSize getImageViewSize(ImageView imageView) {
         ImageSize imageSize = new ImageSize();
 
-        //获取屏幕的宽度
-        /**
-         * 判断并获取实际的
-         * 判断并获取布局中的
-         * 判断并获取最大的
-         * 上述都没设置则压缩为最大屏幕的
-         * */
         DisplayMetrics displayMetrics = imageView.getContext().getResources().getDisplayMetrics();
 
         ViewGroup.LayoutParams lp = imageView.getLayoutParams();

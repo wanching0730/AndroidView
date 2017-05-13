@@ -55,7 +55,6 @@ public class MyAdapter extends RecyclerView.Adapter {
             Log.e(TAG, "no external storage");
             return null;
         }
-
         Uri mImgUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         Cursor cursor = cr.query(mImgUri, null,
                 MediaStore.Images.Media.MIME_TYPE + " = ? or "
