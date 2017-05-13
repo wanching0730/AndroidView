@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -19,17 +20,30 @@ import java.util.List;
  * Created by willj on 2017/5/9.
  */
 
-public class MyAdapter extends RecyclerView.Adapter {
+public class MyAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
     private final static String TAG = "MyAdapter ---";
     private List<String> list = new ArrayList<>();
     private LayoutInflater inflater;
     private Context context;
+    private OnItemClickListener onItemClickListener;
+
     public MyAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
        list.addAll(initPaths());
         Log.i(TAG, "ex");
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (onItemClickListener != null){
+            onItemClickListener.onItemClick(v, (String) v.getTag());
+        }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(View view, String path);
     }
 
     @Override
@@ -39,7 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        //((MyHolder)holder).imageView
+        ((MyHolder)holder).imageView.setOnClickListener(this);
         Load.getInstance().loadImage(((MyHolder)holder).imageView, list.get(position));
     }
 
@@ -70,5 +84,9 @@ public class MyAdapter extends RecyclerView.Adapter {
             Log.d(TAG, path);
         }
         return paths;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
     }
 }
