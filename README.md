@@ -1,16 +1,16 @@
 # AndroidView
-##说明
+## 说明
 这里存放了一些自定义的AndroidView，可作为学习指导参考，或者可选择性地根据自己需求下载源码进行更改后使用；
 </br>
 注意：Android >= 5.0，拷贝快链源码即可使用
-##详细介绍
-###Module项目列表
+## 详细介绍
+### Module项目列表
 * [DiffSizeTextView][1]
 * [LocalImage][2]
 * [MyCircleImgView][3]
 * [SlideListView_4_28][4]
-###Module详情
-####[DiffSizeTextView][1]
+### Module详情
+#### [DiffSizeTextView][1]
 * 图片演示([图片来源][5])：
 <br/>
 ![http://upload-images.jianshu.io/upload_images/1094967-8fe878e55b39af75.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240][6]
@@ -31,9 +31,9 @@
 	</i>
 	<i>3、</i>
 	<i>4、</i>
-####[LocalImage][2]
-####[MyCircleImgView][3]
-####[SlideListView_4_28][4]
+#### [LocalImage][2]
+#### [MyCircleImgView][3]
+#### [SlideListView_4_28][4]
 <ol>
 	<li>
 		<a href="https://github.com/jiarWang/AndroidView/blob/master/MyCircleImgView/app/src/main/java/com/student0/www/mycircleimgview/CircularImageView.java">自定义原图带Padding的ImageView</a>
