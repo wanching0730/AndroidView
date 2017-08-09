@@ -12,8 +12,7 @@
 ### Module详情
 #### [DiffSizeTextView][1]
 * 图片演示([图片来源][5])：
-<br/>
-![http://upload-images.jianshu.io/upload_images/1094967-8fe878e55b39af75.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240][6]
+![演示图][6]
 * 使用说明:
 	<i>1、将自定义控件类文件[DiffSizeTextView.java][7]拷贝进项目中</i>
 	<i>2、在styles.xml文件中添加控件配置信息代码<br/>
