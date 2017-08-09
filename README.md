@@ -12,7 +12,7 @@
 ### Module详情
 #### [DiffSizeTextView][1]
 * 图片演示([图片来源][5])：
-<i></i>![演示图][6]
+<i></i><br>![演示图][6]
 * 使用说明:
 	<i></i>1、将自定义控件类文件[DiffSizeTextView.java][7]拷贝进项目中
 	<i></i>2、在styles.xml文件中添加控件配置信息代码<br/>
