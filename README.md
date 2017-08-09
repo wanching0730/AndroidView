@@ -55,7 +55,7 @@
 * 图片演示:
 <i></i><br>![本地图片][13]<br>
 * 工具使用说明:
-	<i></i><br>1、本Module中的工具类已淘汰，请使用新工具类[ImageLoadUtil.java][14];<br>
+	<i></i><br>1、本Module中的工具类已淘汰，请使用新工具类[ImageLoadUtil.java][14];
 	<i></i><br>2、具体使用说明在[ImageLoadUtil.java][14]内部有详细说明;
 *  附加说明：
 	* 如有问题，请留言，或发送邮件至:2946465099@qq.com
