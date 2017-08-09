@@ -10,12 +10,10 @@
 * [MyCircleImgView][3]
 * [SlideListView_4_28][4]
 ### Module详情
-#### [DiffSizeTextView][1]
-* 图片演示([图片来源][5])：
-<i></i><br>![演示图][6]
+#### [DiffSizeTextView][1] ：定义前后字体不同的TextView控件
 * 使用说明:
-	<i></i>1、将自定义控件类文件[DiffSizeTextView.java][7]拷贝进项目中
-	<i></i>2、在styles.xml文件中添加控件配置信息代码<br/>
+	<i></i><br>1、将自定义控件类文件[DiffSizeTextView.java][7]拷贝进项目中
+	<i></i><br>2、在styles.xml文件中添加控件配置信息代码：<br>
 	```xml
 	<declare-styleable name="DiffSizeTextView">
         <attr name="char_count" format="integer"/>
@@ -27,10 +25,61 @@
         <attr name="textColor" format="color"/>
     </declare-styleable>
 	```
-	<i></i>3、
-	<i></i>4、
+	char_count: 定义前半部分String的length();
+	normal_size: 定义前半部分String的字体大小;
+	special_size: 定义后半部分String的字体大小;
+	text: 等同TextView的text;
+	gravity: 等同TextView的gravity;
+	gap: 前后String的间距;
+	<i></i><br>3、控件使用<br>
+	```xml
+	<com.student0.www.diffsizetextview.DiffSizeTextView
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
+    android:paddingLeft="20dp"
+    app:char_count="2"
+    app:special_size="32sp"
+    app:normal_size="20sp"
+    app:gap="5dp"
+    app:text="@string/app_name"
+    app:textColor="@color/colorAccent"
+    />
+	```
+* 附加说明：
+	* 本控件继承原生的View类；
+	* 开发者可对控件类中的onDraw(Canvas canvas)的画笔进行修改，丰富控件外观；
+	* 开发者可在styles.xml中定义更加具有特性的属性，在控件类的init(Context context, AttributeSet attrs)中读取配置，在onDraw(Canvas canvas)使用配置信息；
+	* 如有问题，请留言，或发送邮件至:2946465099@qq.com
 #### [LocalImage][2]
 #### [MyCircleImgView][3]
+* 图片演示([图片来源][5])：
+<i></i><br>![演示图][6]<br>
+* 使用说明:
+	<i></i><br>1、将自定义控件类文件[DiffSizeTextView.java][7]拷贝进项目中
+	<i></i><br>2、在styles.xml文件中添加控件配置信息代码<br>
+	```xml
+	<declare-styleable name="DiffSizeTextView">
+        <attr name="char_count" format="integer"/>
+        <attr name="special_size" format="dimension"/>
+        <attr name="normal_size" format="dimension"/>
+        <attr name="gravity" format="integer"/>
+        <attr name="text" format="string"/>
+        <attr name="gap" format="dimension"/>
+        <attr name="textColor" format="color"/>
+    </declare-styleable>
+	```
+	<i></i><br>3、控件使用<br>
+	```xml
+	<com.student0.www.mycircleimgview.CircularImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/code"
+        android:padding="5dp"
+        />
+	```
+* 设计说明：
+	* 本控件继承原生的ImageView类
+	* 
 #### [SlideListView_4_28][4]
 <ol>
 	<li>
