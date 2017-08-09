@@ -113,7 +113,7 @@ slideListView.setAdapter(slideAdapter);
 [9]:http://blog.csdn.net/weixin_36570478/article/details/70865625
 [10]:http://blog.csdn.net/weixin_36570478/article/details/70908015
 [12]:http://blog.csdn.net/weixin_36570478/article/details/70470422
-[13]:https://github.com/jiarWang/AndroidView/LocalImage/20170809122613.jpg
+[13]:https://github.com/jiarWang/AndroidView/blob/master/LocalImage/20170809122613.jpg
 [14]:https://github.com/jiarWang/Android-RN/blob/master/M0802/app/src/main/java/com/example/milka/m0802/Camera/Util/ImageLoadUtil.java
 [111]:https://github.com/jiarWang/AndroidView/blob/master/SlideListView_4_28/app/src/main/java/com/student0/www/slidelistview_4_28/SlideListView.java
 [112]:https://github.com/jiarWang/AndroidView/blob/master/SlideListView_4_28/app/src/main/java/com/student0/www/slidelistview_4_28/DisplayUtil.java
