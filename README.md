@@ -26,12 +26,12 @@
         <attr name="textColor" format="color"/>
     </declare-styleable>
 	```
-	char_count: 定义前半部分String的length();<br>
-	normal_size: 定义前半部分String的字体大小;<br>
-	special_size: 定义后半部分String的字体大小;<br>
-	text: 等同TextView的text;<br>
-	gravity: 等同TextView的gravity;<br>
-	gap: 前后String的间距;<br>
+	**char_count**: 定义前半部分String的length();<br>
+	**normal_size**: 定义前半部分String的字体大小;<br>
+	**special_size**: 定义后半部分String的字体大小;<br>
+	**text**: 等同TextView的text;<br>
+	**gravity**: 等同TextView的gravity;<br>
+	**gap**: 前后String的间距;<br>
 	<i></i><br>3、控件使用<br>
 	```xml
 	<com.student0.www.diffsizetextview.DiffSizeTextView
@@ -82,7 +82,7 @@
 * 演示地址: 个人的[CSDN][10]
 * 控件使用说明:
 <i></i><br>
-1、将控件的类文件[SlideListView.java][111]、分辨率计算工具类[DisplayUtil.java][112]、SlideListView适配器[SlideAdapter.java][113]、适配器Item布局文件[slide_item.xml][114]拷贝进项目中的布局文件Layout文件夹下<br>
+1、将控件的类文件[SlideListView.java][111]、分辨率计算工具类[DisplayUtil.java][112]、SlideListView适配器[SlideAdapter.java][113]、适配器Item布局文件[slide_item.xml][114]拷贝进项目中的布局文件Layout文件夹下
 <i></i><br>2、控件使用实例<br>
 ```xml
 <com.student0.www.slidelistview_4_28.SlideListView
@@ -100,7 +100,7 @@ slideListView.setAdapter(slideAdapter);
 	* 控件类中核心在[事件传递机][12]制的实现与控件属性的掌控；
 	* 如果想在item中展示更多的信息，则修改item的布局文件[slide_item.xml][114]，并在适配器[SlideAdapter.java][113]中做简单的修改即可；
 	* 如果想在item中开发更多的类似“删除”的类按钮控件，则可能需要在[SlideListView.java][111]、[SlideAdapter.java][113]、[slide_item.xml][114]做更多较复杂的更改，具体方法可参考“删除”控件的实现方式；
-	* * 如有问题，请留言，或发送邮件至:2946465099@qq.com
+	* 如有问题，请留言，或发送邮件至:2946465099@qq.com
 
 [1]:https://github.com/jiarWang/AndroidView/tree/master/DiffSizeTextView
 [2]:https://github.com/jiarWang/AndroidView/tree/master/LocalImage
