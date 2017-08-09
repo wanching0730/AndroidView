@@ -5,10 +5,10 @@
 注意：Android >= 5.0，拷贝快链源码即可使用
 ## 详细介绍
 ### Module项目列表
-* [DiffSizeTextView][1]
-* [LocalImage][2]
-* [MyCircleImgView][3]
-* [SlideListView_4_28][4]
+* [DiffSizeTextView][1]：DiffSizeTextView定义前后字体不同的TextView控件
+* [LocalImage][2]：利用缓存与多线程，加载并展示本地图片（工具类）
+* [MyCircleImgView][3]：MyCircleImgView定义圆形图片的ImageView带Padding设置
+* [SlideListView_4_28][4]：SlideListView自定义高仿QQ的滑动删除类ListView控件
 ### Module详情
 #### [DiffSizeTextView][1] ：DiffSizeTextView定义前后字体不同的TextView控件
 * 无截图记录
@@ -59,7 +59,7 @@
 	<i></i><br>2、具体使用说明在[ImageLoadUtil.java][14]内部有详细说明;
 *  附加说明：
 	* 如有问题，请留言，或发送邮件至:2946465099@qq.com
-#### [MyCircleImgView][3]:MyCircleImgView定义圆形图片的ImageView带Padding设置
+#### [MyCircleImgView][3]：MyCircleImgView定义圆形图片的ImageView带Padding设置
 * 图片演示([图片来源][5])：
 <i></i><br>![演示图][6]<br>
 * 控件使用说明:
