@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<Button
+    android:textSize="@dimen/app_tip_text_size"
+    android:id="@+id/btn_image_direct"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/image_key"/>
+    <Button
+        android:textSize="@dimen/app_tip_text_size"
+        android:id="@+id/btn_contact_direct"
+        android:text="@string/contact_key"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:textSize="@dimen/app_tip_text_size"
+        android:id="@+id/btn_sp_direct"
+        android:text="@string/shared_preferences_key"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_html_direct"
+        android:text="@string/html_key"
+        android:textSize="@dimen/app_tip_text_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_device_info_direct"
+        android:text="@string/device_information_key"
+        android:textSize="@dimen/app_tip_text_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

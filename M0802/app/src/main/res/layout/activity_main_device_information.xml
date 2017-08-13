@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:stretchColumns="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TableRow >
+            <TextView
+                android:padding="3dp"
+                android:textSize="@dimen/app_tip_text_size"
+                android:text="@string/blue_tooth_status_key"/>
+            <TextView
+                android:id="@+id/tv_blue_tooth_status"
+                android:gravity="right"
+                android:textSize="@dimen/app_tip_text_size"
+                />
+        </TableRow>
+        <TableRow >
+            <TextView
+                android:padding="3dp"
+                android:textSize="@dimen/app_tip_text_size"
+                android:text="@string/net_status_key"/>
+            <TextView
+                android:id="@+id/tv_net_status"
+                android:gravity="right"
+                android:textSize="@dimen/app_tip_text_size"
+                />
+        </TableRow>
+        <TableRow >
+            <TextView
+                android:padding="3dp"
+                android:textSize="@dimen/app_tip_text_size"
+                android:text="@string/net_speed_key"/>
+            <TextView
+                android:id="@+id/tv_net_speed"
+                android:gravity="right"
+                android:textSize="@dimen/app_tip_text_size"
+                />
+        </TableRow>
+
+        <TableRow >
+            <TextView
+                android:padding="3dp"
+                android:textSize="@dimen/app_tip_text_size"
+                android:text="@string/storage_key"/>
+            <TextView
+                android:id="@+id/tv_external_storage_size"
+                android:gravity="right"
+                android:textSize="@dimen/app_tip_text_size"
+                />
+        </TableRow>
+
+        <TableRow >
+            <TextView
+                android:padding="3dp"
+                android:textSize="@dimen/app_tip_text_size"
+                android:text="@string/gps_status_key"/>
+            <TextView
+                android:id="@+id/tv_gps_status"
+                android:gravity="right"
+                android:textSize="@dimen/app_tip_text_size"
+                />
+        </TableRow>
+
+        <TableRow >
+            <TextView
+                android:padding="3dp"
+                android:textSize="@dimen/app_tip_text_size"
+                android:text="@string/production_key"/>
+            <TextView
+                android:id="@+id/tv_production"
+                android:gravity="right"
+                android:textSize="@dimen/app_tip_text_size"
+                />
+        </TableRow>
+
+        <TableRow >
+            <TextView
+                android:padding="3dp"
+                android:textSize="@dimen/app_tip_text_size"
+                android:text="@string/version_key"/>
+            <TextView
+                android:id="@+id/tv_version_info"
+                android:gravity="right"
+                android:textSize="@dimen/app_tip_text_size"
+                />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

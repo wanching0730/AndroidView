@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">M0802</string>
+    
+    <string name="shared_preferences_key">SharedPreferences</string>
+    <string name="contact_key">Contact</string>
+    <string name="image_key">Image</string>
+    <string name="html_key">html5</string>
+    <string name="device_information_key">DeviceInform</string>
+
+    <string name="key">key</string>
+    <string name="value">value</string>
+
+    <string name="name_key">姓名</string>
+    <string name="phone_number_key">手机</string>
+    <string name="email_key">邮箱</string>
+
+    <string name="btn_txt_save">保存</string>
+    <string name="btn_txt_delete">删除</string>
+    <string name="btn_txt_edit">编辑</string>
+    <string name="btn_txt_water_mark">水印</string>
+    <string name="btn_txt_grow">放大</string>
+    <string name="btn_txt_shrink">缩小</string>
+
+    <string name="btn_txt_image_operate">图片变换</string>
+    <string name="btn_txt_image_resource">图片资源</string>
+    <string name="btn_txt_camera">拍照取图</string>
+    <string name="btn_txt_take_camera">拍照</string>
+    <string name="contact_add_menu_name">contact_add</string>
+
+    <string name="btn_txt_call_js">调用无参JS</string>
+    <string name="btn_txt_call_param_js">调用有参JS</string>
+
+    <string name="version_key">版本</string>
+    <string name="production_key">厂商</string>
+    <string name="storage_key">外部存储空间</string>
+    <string name="net_status_key">网络状态</string>
+    <string name="net_speed_key">网速</string>
+    <string name="blue_tooth_status_key">蓝牙状态</string>
+    <string name="gps_status_key">GPS状态</string>
+</resources>
