@@ -13,6 +13,7 @@
 * [LocalImage][2]：利用缓存与多线程，加载并展示本地图片（工具类）
 * [MyCircleImgView][3]：MyCircleImgView定义圆形图片的ImageView带Padding设置
 * [SlideListView_4_28][4]：SlideListView自定义高仿QQ的滑动删除类ListView控件
+* [M0802][15]:Android中经常使用的工具（图片操作，SharedPreference，WebView交互,设备信息等）。
 ### Module详情
 #### [DiffSizeTextView][1] ：DiffSizeTextView定义前后字体不同的TextView控件
 * 无截图记录
@@ -106,6 +107,15 @@ slideListView.setAdapter(slideAdapter);
 	* 如果想在item中开发更多的类似“删除”的类按钮控件，则可能需要在[SlideListView.java][111]、[SlideAdapter.java][113]、[slide_item.xml][114]做更多较复杂的更改，具体方法可参考“删除”控件的实现方式；
 	* 如有问题，请留言，或发送邮件至:2946465099@qq.com
 
+### [M0802][15]:Android中经常使用的工具（图片操作，SharedPreference，WebView交互,设备信息等）。
+
+* [M0802][1]对以下的五个功能模块进行封装并应用在Module中:
+> * 1、在ContentProvider下，对[通信录CRUB进行操作][17]；
+> * 2、在SharedPerferences下的[CRUD操作][20]；
+> * 3、[图片的处理][16]，如：图片的编辑(增加水印、放大查看、压缩)，本地图片加载、图片资源的选择与拍照后返回图片；
+> * 4、[WebView展示页面，并与原生交互][19]；
+> * 5、[获取设备信息][18]，如：设备型号与厂商、获取存储空间、网络状态与网络速度、蓝牙与GPS的状态（开|关）； 
+
 [1]:https://github.com/jiarWang/AndroidView/tree/master/DiffSizeTextView
 [2]:https://github.com/jiarWang/AndroidView/tree/master/LocalImage
 [3]:https://github.com/jiarWang/AndroidView/tree/master/MyCircleImgView
@@ -125,3 +135,10 @@ slideListView.setAdapter(slideAdapter);
 https://github.com/jiarWang/AndroidView/blob/master/SlideListView_4_28/app/src/main/java/com/student0/www/slidelistview_4_28/SlideAdapter.java
 [114]:
 https://github.com/jiarWang/AndroidView/blob/master/SlideListView_4_28/app/src/main/res/layout/slide_item.xml
+[15]:https://github.com/jiarWang/AndroidView/tree/master/M0802
+
+[16]:https://github.com/jiarWang/AndroidView/tree/master/M0802/app/src/main/java/com/example/milka/m0802/Camera
+[17]:https://github.com/jiarWang/AndroidView/tree/master/M0802/app/src/main/java/com/example/milka/m0802/ContentResolver/Contact
+[18]:https://github.com/jiarWang/AndroidView/tree/master/M0802/app/src/main/java/com/example/milka/m0802/Device
+[19]:https://github.com/jiarWang/AndroidView/tree/master/M0802/app/src/main/java/com/example/milka/m0802/Html
+[20]:https://github.com/jiarWang/AndroidView/tree/master/M0802/app/src/main/java/com/example/milka/m0802/SharedPreferences
