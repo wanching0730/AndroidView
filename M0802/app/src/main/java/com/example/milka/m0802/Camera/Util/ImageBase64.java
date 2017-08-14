@@ -57,4 +57,49 @@ public class ImageBase64 {
         byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
+
+    
+    /**
+     * base64转为bitmap
+     *
+     * @param base64Data
+     * @return
+     */
+    public static Bitmap base64ToBitmap(String base64Data) {
+        byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    /**
+     * 不压缩Bitmap大小，直接将其转换为Base字符串 
+     *
+     * */
+    public static String bitmapToBase64WithoutCompress(Bitmap bitmap) {
+        String result = null;
+        ByteArrayOutputStream outputStream = null;
+        try {
+            if (bitmap != null) {
+                outputStream = new ByteArrayOutputStream();
+                int options = 100;
+                bitmap.compress(Bitmap.CompressFormat.PNG, options, outputStream);
+
+                byte[] bitmapBytes = outputStream.toByteArray();
+                outputStream.flush();
+                outputStream.close();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (outputStream != null) {
+                    outputStream.flush();
+                    outputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 }
