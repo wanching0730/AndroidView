@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.milka.googlemapjsonreader.utils.DirectInfo;
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,21 +72,26 @@ public class MainActivity extends AppCompatActivity {
         btnReq = (Button) findViewById(R.id.btn_req);
         tvJson = (TextView) findViewById(R.id.tv_json);
     }
-
+/**
+ * 执行异步任务
+ *传入完整的url，实例化AsyncTas，并调用execute(url)，传递参数执行异步任务
+ * @param url 请求网络数据的url
+ **/
     private void reqJSONByUrl(String url){
         new GetJsonByUrl().execute(url);
     }
-
-
-
+/**
+ * 使用AsyncTask从网络异步加载导航的JSON数据类
+ * 在请求结束时，回调onPostExecute(String s),并将返回的JSON
+ * 字符串作为回调方法onPostExecute()的参数传递供使用。
+ *
+ * 内部的提示交互及编程风格在使用时需要改善
+ * */
     private class GetJsonByUrl extends AsyncTask<String, Integer, String>{
-
-
         @Override
         protected void onPreExecute() {
             progressDialog.show();
         }
-
         @Override
         protected String doInBackground(String... params) {
             String link = params[0];
@@ -112,16 +120,31 @@ public class MainActivity extends AppCompatActivity {
         protected void onProgressUpdate(Integer... values) {
             progressDialog.setMessage("loading" + values[0] + "%");
         }
-
         @Override
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
             if (s != null){
                 Log.i(TAG, s);
                 tvJson.setText(s);
+                parseJSON(s);
             }else{
                 Toast.makeText(MainActivity.this, "网络请求返回NULL", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    /**
+     * JSON解析,使用Gson解析
+     * compile 'com.google.code.gson:gson:2.7'
+     * */
+    private void parseJSON(String jsonString){
+        if (jsonString == null){
+            return;
+        }
+        Gson gson = new Gson();
+        DirectInfo directInfo = gson.fromJson(jsonString, DirectInfo.class);
+        Log.i(TAG, directInfo.routes.get(0).legs.get(0).end_address);
+        String s = gson.toJson(directInfo);
+        tvJson.setText(s);
     }
 }
