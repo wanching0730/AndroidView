@@ -1,0 +1,455 @@
+
+/**
+*导航请求json结构解析
+*
+*https://developers.google.com/maps/documentation/directions/intro?hl=zh-cn#Waypoints
+*https://www.youtube.com/watch?v=CCZPUeY94MU
+*
+*req:
+    https://maps.googleapis.com/maps/api/directions/json?origin=31.174164,%20121.418201&destination=31.118421,%20121.271089&key=AIzaSyA_8uc5Vd4R33QMu7IDubThTLSCrltes7g&language=zh-CN
+*/
+{
+    "geocoded_waypoints" : [
+       {
+           /*地址编码操作所产生的状态*/
+          "geocoder_status" : "OK",
+          /*唯一一个可以与其他Google API结合使用的标识符*/
+          "place_id" : "ChIJSeQqsuhksjUR6UOG6X0jEuY",
+          /*表示用于计算路线的地址编码结果的地址类型*/
+          "types" : [ "street_address" ]
+       },
+       {
+          "geocoder_status" : "OK",
+          "place_id" : "ChIJhaReOAxgsjURBeJGny_-U0M",
+          "types" : [ "route" ]
+       }
+    ],
+    /*routes 数组的每一个元素都包含来自指定地点和目的
+    *地的单个结果。视是否指定了任何路径而定，该路线可能包含一个
+    *或多个段。除路线信息外，该路线还包含必须向用户显示的版权
+    *和警告信息。
+    */
+    "routes" : [
+       {
+          "bounds" : {
+             "northeast" : {
+                "lat" : 31.208202,
+                "lng" : 121.4266705
+             },
+             "southwest" : {
+                "lat" : 31.11839549999999,
+                "lng" : 121.2699297
+             }
+          },
+          /*包含需要为该路线显示的版权文本。您必须自行处理和显示信息*/
+          "copyrights" : "地图数据 ©2017 GS(2011)6020 Google",
+          /*包含一个数组，其中包含给定路线内
+          某一段（两个位置之间）的相关信息。指定的
+          每个路径点或目的地都有单独的段与之对应。（不含路径点的路线
+          在legs数组内将只包含一个段。）每一段都包含一系列分段
+          */
+          "legs" : [
+             {
+                 /*表示该段覆盖的总距离，包含value
+                 , text字段，如果距离未知，则可能不会出现
+                 这些字段
+                 */
+                "distance" : {
+                    /*包含可人工读取的距离*/
+                   "text" : "25.5 公里",
+                   /*表示距离: m*/
+                   "value" : 25497
+                },
+                /*表示该段的总持续时间,包含value，text，如果
+                持续时间未知，可能不会出现这些字段
+                */
+                "duration" : {
+                    /*包含可人工读取的时间*/
+                   "text" : "41分钟",
+                   /*表示持续时间：s*/
+                   "value" : 2437
+                },
+                /*包含通过对该段的end_location进行反向地理
+                编码所获得的可人工读取地址（通常是街道地址）
+                */
+                "end_address" : "中国上海市松江区赵非公路",
+                /*包含该段给定目的地的经纬坐标，由于Google Maps
+                Directions API在计算位置的路线时使用的是最接近
+                起点和终点的交通方案（通常是道路），举例来说，如果目的地
+                的附近没有道路,end_location则可能不同于所提供的该段目的地
+                */
+                "end_location" : {
+                   "lat" : 31.1184844,
+                   "lng" : 121.270718
+                },
+                /*包含通过对该段的start_location进行反向地理
+                编码所获得的可人工读取地址（通常是街道地址）*/
+                "start_address" : "中国上海市徐汇区田林宜山路701号 邮政编码: 200000",
+                /*start_location可对照上述end_location的说明理解*/
+                "start_location" : {
+                   "lat" : 31.1746835,
+                   "lng" : 121.4181004
+                },
+                /*包含一系列分段，表示有关旅程每个单独分段的信息*/
+                "steps" : [
+                   {
+                      "distance" : {
+                         "text" : "1.3 公里",
+                         "value" : 1256
+                      },
+                      "duration" : {
+                         "text" : "4分钟",
+                         "value" : 259
+                      },
+                      /*分段终点位置*/
+                      "end_location" : {
+                         "lat" : 31.1825079,
+                         "lng" : 121.426578
+                      },
+                      /*包含该分段的格式化命令，以HTML文本字符串形式呈现*/
+                      "html_instructions" : "从\u003cb\u003e宜山路\u003c/b\u003e向\u003cb\u003e东\u003c/b\u003e行驶，到\u003cb\u003e柳州路\u003c/b\u003e",
+                      /*包含一个points对象，用于储存经过编码的折线形式表示的路段。该多段线是分段的近似（平滑）路径*/
+                      "polyline" : {
+                         "points" : "wxg}DcnadVAKAEMs@QcAIq@UiBQeAS}@Sq@CKUq@?AQi@Uk@_@cAk@oAi@_A[g@[e@aAoAq@u@c@e@e@a@MIcAu@KIm@a@i@Yg@UsBy@uD_BuDcBMGYK_Bo@_@Yg@UcBo@"
+                      },
+                      /*包含该分段的起点的位置*/
+                      "start_location" : {
+                         "lat" : 31.1746835,
+                         "lng" : 121.4181004
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "1.2 公里",
+                         "value" : 1205
+                      },
+                      "duration" : {
+                         "text" : "3分钟",
+                         "value" : 193
+                      },
+                      "end_location" : {
+                         "lat" : 31.1914822,
+                         "lng" : 121.4198052
+                      },
+                      "html_instructions" : "向\u003cb\u003e左\u003c/b\u003e转，进入\u003cb\u003e中山西路\u003c/b\u003e",
+                      "maneuver" : "turn-left",
+                      "polyline" : {
+                         "points" : "uii}DcccdVIEKEKEKTWf@Yf@w@hAYZi@l@A@QNKJc@\\MHw@j@_@V_@VOHc@X]TGDc@Vc@VgAp@_@R}D|BsFfDE@i@^gDxBIDKFkAx@[ReBjAgAp@]TKFIFg@X_Al@"
+                      },
+                      "start_location" : {
+                         "lat" : 31.1825079,
+                         "lng" : 121.426578
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "1.7 公里",
+                         "value" : 1682
+                      },
+                      "duration" : {
+                         "text" : "2分钟",
+                         "value" : 117
+                      },
+                      "end_location" : {
+                         "lat" : 31.2048644,
+                         "lng" : 121.4122087
+                      },
+                      "html_instructions" : "上匝道走\u003cb\u003e内环高架路\u003c/b\u003e",
+                      "polyline" : {
+                         "points" : "wak}DyxadVC@C?C@A@C?A@C@C@gCbBWPs@f@cAp@aAp@u@h@o@f@IH}@n@KHGFEDCDA@KPu@h@mA|@_ErCYPCBgMvI]TUNIFo@\\ULmB|@UJ_@P{@^i@Tq@Vq@TiBf@u@Nq@LIBa@F}@Jo@FyANaAHeCNcBLU@"
+                      },
+                      "start_location" : {
+                         "lat" : 31.1914822,
+                         "lng" : 121.4198052
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "0.1 公里",
+                         "value" : 95
+                      },
+                      "duration" : {
+                         "text" : "1分钟",
+                         "value" : 6
+                      },
+                      "end_location" : {
+                         "lat" : 31.205714,
+                         "lng" : 121.4122504
+                      },
+                      "html_instructions" : "下\u003cb\u003e延安高架路\u003c/b\u003e出口，前往\u003cb\u003e延安高架路\u003c/b\u003e",
+                      "maneuver" : "ramp-right",
+                      "polyline" : {
+                         "points" : "kum}Dii`dVIAIAYCQ?WAi@@g@?"
+                      },
+                      "start_location" : {
+                         "lat" : 31.2048644,
+                         "lng" : 121.4122087
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "5.9 公里",
+                         "value" : 5943
+                      },
+                      "duration" : {
+                         "text" : "9分钟",
+                         "value" : 522
+                      },
+                      "end_location" : {
+                         "lat" : 31.1848831,
+                         "lng" : 121.362334
+                      },
+                      "html_instructions" : "在交岔路口靠\u003cb\u003e左\u003c/b\u003e，并入\u003cb\u003e延安高架路\u003c/b\u003e",
+                      "maneuver" : "fork-left",
+                      "polyline" : {
+                         "points" : "uzm}Dqi`dVC?QBWBUBS@I@E?I?C@S?K@C?mABI@S?o@@_@?S?IAGAG?EAKCICMEKGIIKIIKGKEMEMAKAI?I?K@IBIBMBCDMLQPMLCNEP?L?PBLDNDPJNPRPX`@NPRX@@NZTVLRJJ?@JJNP@@DFDDB@@BRVb@j@^b@TVPPvA|BPVxCpEx@nADFd@r@RZ^j@FJlAjBV^\\j@BB\\j@d@v@`@r@DF^t@^z@\\|@b@|ANl@H`@Nz@PfAPdAX`Bf@|CRlAPfAPdAF^b@nCVxALv@Hd@@DZrBLv@Jj@F`@l@zC?@Nj@Pp@Tt@f@zADLr@hBDJpAnC~@fBlB|Df@bANX\\p@~A`DxC`GtBfEp@tArAlCHNLTHR~CnGlA`Cr@xAj@pAxAjDFPhAvCPd@fBhFx@pCZnAXhAHVbAfE\\dBXpAl@vC^~Al@tCHZz@zDz@`Ez@zD^fBR|@@Bf@|Bh@dCp@xC@Dp@~CPv@r@dDXpA@Fp@xCZzAH^l@dCThAJf@`@fBLn@Pp@BJ?@jA`GVlAH\\Nr@Pt@?@@??@"
+                      },
+                      "start_location" : {
+                         "lat" : 31.205714,
+                         "lng" : 121.4122504
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "7.2 公里",
+                         "value" : 7238
+                      },
+                      "duration" : {
+                         "text" : "8分钟",
+                         "value" : 492
+                      },
+                      "end_location" : {
+                         "lat" : 31.154292,
+                         "lng" : 121.2967253
+                      },
+                      "html_instructions" : "继续前行，上\u003cb\u003eG50沪渝高速\u003c/b\u003e/\u003cb\u003eG50\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003e部分收费路段\u003c/div\u003e",
+                      "polyline" : {
+                         "points" : "oxi}DqqvcVRz@Lf@\\hAJ`@Nd@Rl@N^HTDHPj@Pd@LZRn@BDRb@Zv@Td@R`@f@`AJPVd@Zj@JTNP`@p@PTZd@RXHJdArAvAxAn@r@RRz@z@NPjBrBbEnDBBbB`BJHhAdA~B|Bv@p@p@p@dE|DpApARRTVj@l@b@f@t@z@r@z@n@v@PTZb@X\\h@r@l@z@~@vA`AzAx@rA`@r@FLn@fA`@x@r@vAl@jAh@hAt@dBp@bBv@pBh@vA\\dAL\\HX^fAz@xCd@dBb@dBBLDNDRJ`@DRvAlGr@~C\\~ALl@d@nBf@vB^xA\\tAh@hBbAhDv@hCd@|A`@rARp@j@pBL\\HXHVX~@dAlD|@xCJ\\bBzFrAlEvA~EPf@Ld@Tr@Pj@d@`B`@tA|AnFlDzMz@`DZvAH\\FVbAjEzAtHNxBJx@NbA\\lBV`ATv@`AjCh@tAb@hBVbAPr@Hb@Jf@Nt@fDnO|BfK|@~Dt@nDnBhJFZd@|Bv@fE\\hBv@|EnAvH"
+                      },
+                      "start_location" : {
+                         "lat" : 31.1848831,
+                         "lng" : 121.362334
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "0.3 公里",
+                         "value" : 285
+                      },
+                      "duration" : {
+                         "text" : "1分钟",
+                         "value" : 16
+                      },
+                      "end_location" : {
+                         "lat" : 31.154021,
+                         "lng" : 121.2937687
+                      },
+                      "html_instructions" : "下\u003cb\u003eG15/宁波/南通\u003c/b\u003e出口，前往\u003cb\u003eG15沈海高速\u003c/b\u003e/\u003cb\u003e嘉金高速\u003c/b\u003e/\u003cb\u003eG15\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003e收费路段\u003c/div\u003e",
+                      "maneuver" : "ramp-right",
+                      "polyline" : {
+                         "points" : "iyc}DqwicVEd@?L?F?N@TP~ANxANnBBtAB~A?L"
+                      },
+                      "start_location" : {
+                         "lat" : 31.154292,
+                         "lng" : 121.2967253
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "2.9 公里",
+                         "value" : 2932
+                      },
+                      "duration" : {
+                         "text" : "2分钟",
+                         "value" : 148
+                      },
+                      "end_location" : {
+                         "lat" : 31.1371525,
+                         "lng" : 121.3032576
+                      },
+                      "html_instructions" : "在交岔路口靠\u003cb\u003e左\u003c/b\u003e，并入\u003cb\u003eG15沈海高速\u003c/b\u003e/\u003cb\u003e嘉金高速\u003c/b\u003e/\u003cb\u003eG15\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003e收费路段\u003c/div\u003e",
+                      "maneuver" : "fork-left",
+                      "polyline" : {
+                         "points" : "swc}DaeicVB|B?lC?zAEbBAr@IbAEv@S|BEj@A^?V@RBZDRBNDPDPVj@PVBDDFRT`@TVNTFPDHBT@X@H?D?FAH?VELC?AB?NG@?RIRMJGDEPOFGp@y@Vc@Zm@l@sA^w@p@{Ad@gAb@{@r@mAd@s@`@q@P[j@o@p@o@x@{@j@i@b@m@lAkAzKsJdEkDLMfGeF|WaUhAaAjDuCxDmCpBkA"
+                      },
+                      "start_location" : {
+                         "lat" : 31.154021,
+                         "lng" : 121.2937687
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "0.9 公里",
+                         "value" : 947
+                      },
+                      "duration" : {
+                         "text" : "2分钟",
+                         "value" : 132
+                      },
+                      "end_location" : {
+                         "lat" : 31.1308708,
+                         "lng" : 121.3037467
+                      },
+                      "html_instructions" : "下\u003cb\u003e沪松公路\u003c/b\u003e出口，前往\u003cb\u003e124省道\u003c/b\u003e/\u003cb\u003e沪松公路\u003c/b\u003e/\u003cb\u003eS124\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003e部分收费路段\u003c/div\u003e",
+                      "maneuver" : "ramp-right",
+                      "polyline" : {
+                         "points" : "en`}Dk`kcVV?JALCZG`@Mr@St@StAe@`@Mt@Sb@KhB]tA]l@KDCb@Gt@Id@Ej@CHAN?x@Cd@?t@B`@@`@F^FPBN@h@BP@R?jAAP@b@BN@LBHBDBB@BDDF@BBH@H?FAJAFCJCFCDABC@CBC@E@C@E?I?g@EO?O?K?K@K@KB"
+                      },
+                      "start_location" : {
+                         "lat" : 31.1371525,
+                         "lng" : 121.3032576
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "85 米",
+                         "value" : 85
+                      },
+                      "duration" : {
+                         "text" : "1分钟",
+                         "value" : 10
+                      },
+                      "end_location" : {
+                         "lat" : 31.1313932,
+                         "lng" : 121.3031331
+                      },
+                      "html_instructions" : "在交岔路口靠\u003cb\u003e左\u003c/b\u003e，继续朝\u003cb\u003e124省道\u003c/b\u003e/\u003cb\u003e沪松公路\u003c/b\u003e/\u003cb\u003eS124\u003c/b\u003e前行",
+                      "maneuver" : "fork-left",
+                      "polyline" : {
+                         "points" : "}f_}DmckcVEPo@`AKLMPWF"
+                      },
+                      "start_location" : {
+                         "lat" : 31.1308708,
+                         "lng" : 121.3037467
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "1.7 公里",
+                         "value" : 1721
+                      },
+                      "duration" : {
+                         "text" : "4分钟",
+                         "value" : 224
+                      },
+                      "end_location" : {
+                         "lat" : 31.1210368,
+                         "lng" : 121.2900665
+                      },
+                      "html_instructions" : "向\u003cb\u003e左\u003c/b\u003e转，进入\u003cb\u003e124省道\u003c/b\u003e/\u003cb\u003e沪松公路\u003c/b\u003e/\u003cb\u003eS124\u003c/b\u003e",
+                      "maneuver" : "turn-left",
+                      "polyline" : {
+                         "points" : "ej_}Dq_kcVSBPPHHnDbD`C|B`DzC~AxA\\^`BxA\\Zx@t@h@j@dBpBJN|@lAl@|@Vb@R\\x@vAHJt@nAv@rAvE`IPZzAfChAnBdAdBjBdDV`@`EfH"
+                      },
+                      "start_location" : {
+                         "lat" : 31.1313932,
+                         "lng" : 121.3031331
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "1.9 公里",
+                         "value" : 1924
+                      },
+                      "duration" : {
+                         "text" : "4分钟",
+                         "value" : 247
+                      },
+                      "end_location" : {
+                         "lat" : 31.1196419,
+                         "lng" : 121.2699297
+                      },
+                      "html_instructions" : "向\u003cb\u003e右\u003c/b\u003e转，进入\u003cb\u003e346县道\u003c/b\u003e/\u003cb\u003e泗陈公路\u003c/b\u003e/\u003cb\u003eX346\u003c/b\u003e",
+                      "maneuver" : "turn-right",
+                      "polyline" : {
+                         "points" : "oi}|D}mhcVFfE@zADnB?XJbN@nBBlCBnE`@dKv@lT?Dp@hO@Jx@rQh@vL"
+                      },
+                      "start_location" : {
+                         "lat" : 31.1210368,
+                         "lng" : 121.2900665
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "0.1 公里",
+                         "value" : 143
+                      },
+                      "duration" : {
+                         "text" : "1分钟",
+                         "value" : 57
+                      },
+                      "end_location" : {
+                         "lat" : 31.11839549999999,
+                         "lng" : 121.2702965
+                      },
+                      "html_instructions" : "向\u003cb\u003e左\u003c/b\u003e转，进入\u003cb\u003e赵非公路\u003c/b\u003e",
+                      "maneuver" : "turn-left",
+                      "polyline" : {
+                         "points" : "w`}|DapdcVHAlFgA"
+                      },
+                      "start_location" : {
+                         "lat" : 31.1196419,
+                         "lng" : 121.2699297
+                      },
+                      "travel_mode" : "DRIVING"
+                   },
+                   {
+                      "distance" : {
+                         "text" : "41 米",
+                         "value" : 41
+                      },
+                      "duration" : {
+                         "text" : "1分钟",
+                         "value" : 14
+                      },
+                      "end_location" : {
+                         "lat" : 31.1184844,
+                         "lng" : 121.270718
+                      },
+                      "html_instructions" : "向\u003cb\u003e左\u003c/b\u003e转",
+                      "maneuver" : "turn-left",
+                      "polyline" : {
+                         "points" : "_y||DkrdcVEa@Iq@"
+                      },
+                      "start_location" : {
+                         "lat" : 31.11839549999999,
+                         "lng" : 121.2702965
+                      },
+                      "travel_mode" : "DRIVING"
+                   }
+                ],
+                "traffic_speed_entry" : [],
+                "via_waypoint" : []
+             }
+          ],
+          /*其中包含单个points对象，用于储存以经过编码的折现表示路线
+         。此折线是所生成路线的近似（平滑处理）路径 
+          */
+          "overview_polyline" : {
+             "points" : "wxg}DcnadVc@iC_@{Ce@cCm@qBg@uAkAsCeAgB}AuBuA{As@k@oA_AwA{@{CoAkJcEg@S_Bo@_@YkCeAUKKEKTq@nAqAdBk@n@oAbAgCdBmBlAiIzEyFhDqExC}BzAwEzCuBpAMBqChBoCjBqDlCwAfAEFKPu@h@mGpE]TeOdKeAj@cChA{Ap@{Al@{C|@gB\\k@JmBR{CXiF\\_@?c@E{B?cAJqAFoBDoA@]Aa@GWIUQUUMYGYAS@UFWHQLQPM\\I^?^H`@Pb@b@h@r@z@nA|@hAJJv@bAt@z@PPvA|BjDhFxBfDlCbEdBrCf@z@~@pB\\|@b@|AXnAlAjH~AxJfCxO`AjF`@|A|@pCx@vBvAzCdFbKjPf\\vFdL~AjD`B|DzA|DfBhFx@pCt@xClA~EdCnLnDnPvFhWjFlVtCnMbBnIj@hCT|@fAxDxBjGhAfC~AzCxAdCjA`BdArAvAxAbAfAjAlAjBrBbEnDfBdBtAnAnL~KfDjD|DvEpBjClBrCzBnDzBbE`BbD~AnDhBtEfA|CrBxGrAhFnBvIdC|KfApEfA~DbEdNvAzEbMfb@fAlDfAvD|AnFlDzMvAxFPt@bAjEzAtHNxBJx@l@pDl@xBjB`Fz@lDv@tDdHv[rBnJvBdK|AdItAfInAvHEd@?T@d@`@xDNnBBtABlBBjGE~DKvBYtDGjA@j@Hn@H`@\\|@n@z@x@d@f@L^Db@@n@G`@Mt@_@VUx@aAr@qAlAkCvAcDvAiCfAeB|@kAjBkBj@i@b@m@hN_MrEyDzg@_c@xDmCpBkAb@Ah@KtAa@jCy@vAa@pGsAh@KzAO~BIzABbAHp@Jx@Dd@@|A?r@DVFHDHLF^CRGRMNSDqAEo@FEPo@`AY^k@JZZrPvOvEjEnC|ChA|AdA`BlAtBnIpN|FxJbCfE`EfHFfEFjEJ|ND|FBnE`@dKv@rTr@tObBj_@vFiAOsA"
+          },
+          /*包含简短的路线文本说明，适用于命名路线以及消除路线与备选路线的歧义*/
+          "summary" : "G50沪渝高速/G50",
+          /*包含要在限时这些路线时显示的一组警告。您必须自行处理和显示*/
+          "warnings" : [],
+          /*（以XML格式时为<waypoint_index>）包含一个数组，用于指示所计算路线内
+          所有路径的顺序。如果为请求的waypoints参数传递了optimize:true，则可
+          对这些路径点重新排序
+          */
+          "waypoint_order" : []
+       }
+    ],
+    "status" : "OK"
+ }

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GoogleMapJSONReader</string>
+    <string name="btn_txt">获取</string>
+</resources>
