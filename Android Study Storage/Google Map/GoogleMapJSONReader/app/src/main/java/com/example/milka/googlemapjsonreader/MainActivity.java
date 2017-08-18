@@ -12,6 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.milka.googlemapjsonreader.utils.DirectInfo;
+import com.example.milka.googlemapjsonreader.utils.DirectInfo1;
+import com.example.milka.googlemapjsonreader.utils.JsonFormTool;
+import com.example.milka.googlemapjsonreader.utils.ParseJson;
+import com.example.milka.googlemapjsonreader.utils.ReqParams;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -20,9 +24,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by Milka on 2017/8/17.
+ *
+ * 程序入口
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -32,13 +39,15 @@ public class MainActivity extends AppCompatActivity {
     private Button btnReq;
     private TextView tvJson;
     private ProgressDialog progressDialog;
+    private List<String> routes;
 //https://maps.googleapis.com/maps/api/directions/json?origin=&destination=&key=AIzaSyA_8uc5Vd4R33QMu7IDubThTLSCrltes7g&language=zh-CN
-    private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
+    private static final String DIRECTION_API_URL = "https://maps.googleapis.com/maps/api/directions/json?";
     /*此处的KEY 需要在https://developers.google.com/maps/documentation/directions/get-api-key?hl=zh-cn#header中获得*/
     private static final String GOOGLE_API_KEY = "AIzaSyA_8uc5Vd4R33QMu7IDubThTLSCrltes7g";
     private static final String ORIGIN_POSITION = "31.174164,121.418201";
     private static final String DESTINATION_POSITION = "31.118421,121.271089";
     private static final String LANGUAGE_TYPE = "zh-CN";
+    private static final String MODE = "walking";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +62,11 @@ public class MainActivity extends AppCompatActivity {
         btnReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = DIRECTION_URL_API
-                        + "origin="
-                        + ORIGIN_POSITION
-                        + "&destination="
-                        + DESTINATION_POSITION
-                        + "&key="
-                        + GOOGLE_API_KEY
-                        + "&language="
-                        + LANGUAGE_TYPE;
+                String url = DIRECTION_API_URL
+                        + new ReqParams(ORIGIN_POSITION, DESTINATION_POSITION, GOOGLE_API_KEY)
+                        .setLanguage(LANGUAGE_TYPE)
+                        .setMode(MODE)
+                        .getParamsString();
                 Log.i(TAG, url);
                 reqJSONByUrl(url);
             }
@@ -124,27 +129,16 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             progressDialog.dismiss();
             if (s != null){
-                Log.i(TAG, s);
+                //Log.i(TAG, s);
                 tvJson.setText(s);
-                parseJSON(s);
+               routes = new ParseJson(s).getRoutesAt(0);
+//                for (int i = 0; i < routes.size(); i ++){
+//                    Log.i(TAG, routes.get(i));
+//                }
             }else{
                 Toast.makeText(MainActivity.this, "网络请求返回NULL", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    /**
-     * JSON解析,使用Gson解析
-     * compile 'com.google.code.gson:gson:2.7'
-     * */
-    private void parseJSON(String jsonString){
-        if (jsonString == null){
-            return;
-        }
-        Gson gson = new Gson();
-        DirectInfo directInfo = gson.fromJson(jsonString, DirectInfo.class);
-        Log.i(TAG, directInfo.routes.get(0).legs.get(0).end_address);
-        String s = gson.toJson(directInfo);
-        tvJson.setText(s);
-    }
 }
