@@ -1,6 +1,7 @@
 package com.example.milka.mapdirect;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.milka.mapdirect.utils.DrawDirection;
 import com.example.milka.mapdirect.utils.ParseJson;
 import com.example.milka.mapdirect.utils.ReqParams;
 import com.google.android.gms.common.api.Status;
@@ -46,10 +48,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng originLocation;
     private LatLng targetLocation;
 
-    private ProgressDialog progressDialog;
-
-    private List<LatLng> routes;
-
     private static final String DIRECTION_API_URL = "https://maps.googleapis.com/maps/api/directions/json?";
     /*此处的KEY 需要在https://developers.google.com/maps/documentation/directions/get-api-key?hl=zh-cn#header中获得*/
     private static final String GOOGLE_API_KEY = "AIzaSyApp9CynXJd6pFntmF1BGVmcCadY1Is6J8";
@@ -65,7 +63,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         initView();
         setListener();
         mapFragment.getMapAsync(this);
-        progressDialog = new ProgressDialog(this);
     }
 
     private void setListener() {
@@ -137,11 +134,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         mMap.setMyLocationEnabled(true);
-
+        //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(31.174164, 121.418201);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
+        //LatLng sydney = new LatLng(31.174164, 121.418201);
+        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
     }
 
     @Override
@@ -149,6 +146,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         switch (v.getId()){
             case R.id.btn_direct:
                 if (originLocation != null && targetLocation != null){
+                    mMap.clear();
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 16));
                     directPain(originLocation,targetLocation);
                 }
@@ -161,85 +159,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void directPain(LatLng originLocation, LatLng targetLocation){
         String originPosition = "" + originLocation.latitude +","+ originLocation.longitude;
         String destinationPosition = "" + targetLocation.latitude + "," + targetLocation.longitude;
-        String url = DIRECTION_API_URL
-                + new ReqParams(originPosition, destinationPosition, GOOGLE_API_KEY)
+        String url = DIRECTION_API_URL;
+        String params = new ReqParams(originPosition, destinationPosition, GOOGLE_API_KEY)
                 .setLanguage(LANGUAGE_TYPE)
                 .setMode(MODE)
                 .getParamsString();
         Log.i(TAG, url);
-        reqJSONByUrlAndPoint(url);
+        new DrawDirection(this, mMap).execute(url);
     }
-
-    /**
-     * 执行异步任务
-     *传入完整的url，实例化AsyncTas，并调用execute(url)，传递参数执行异步任务
-     * @param url 请求网络数据的url
-     **/
-    private void reqJSONByUrlAndPoint(String url){
-        Log.i(TAG, url);
-        new GetJsonByUrl().execute(url);
-    }
-    /**
-     * 使用AsyncTask从网络异步加载导航的JSON数据类
-     * 在请求结束时，回调onPostExecute(String s),并将返回的JSON
-     * 字符串作为回调方法onPostExecute()的参数传递供使用。
-     *
-     * 内部的提示交互及编程风格在使用时需要改善
-     * */
-    private class GetJsonByUrl extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            progressDialog.show();
-        }
-        @Override
-        protected String doInBackground(String... params) {
-            String link = params[0];
-            try {
-                URL url = new URL(link);
-                InputStream is = url.openConnection().getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-                reader.close();
-                is.close();
-                return buffer.toString();
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            progressDialog.setMessage("loading" + values[0] + "%");
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            progressDialog.dismiss();
-            if (s != null){
-                routes = new ParseJson(s).getRouteAt(0);
-                pointMap(routes);
-            }else{
-                Toast.makeText(MapsActivity.this, "网络请求返回NULL", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    private void pointMap(List<LatLng> routes) {
-        PolylineOptions polylineOptions = new PolylineOptions();
-        int routesSize = routes.size();
-        Log.i(TAG , ""+ routesSize);
-        polylineOptions.addAll(routes);
-        polylineOptions.width(10).color(Color.BLACK).geodesic(true);
-        if (!polylineOptions.isGeodesic()){
-            polylineOptions.geodesic(true);
-        }
-        mMap.addPolyline(polylineOptions);
-    }
-
 }
