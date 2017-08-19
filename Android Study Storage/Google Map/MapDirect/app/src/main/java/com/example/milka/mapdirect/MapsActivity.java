@@ -75,38 +75,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setListener();
         mapFragment.getMapAsync(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        showCurrentLocation(fusedLocationProviderClient);
-    }
-/**
- * 此函数需要额外的时间请求
- * 所以一般不能直接放在onCreate中或者onMapReady中执行，会导致第一次无法直接定位到CurrentLocation
- * 此函数只是实现定位目前的经纬度，当地图加载完成后无可正常使用
- * */
-    private void showCurrentLocation(FusedLocationProviderClient fusedLocationProviderClient) {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful() && task.getResult() != null) {
-                    Location location = task.getResult();
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10));
-                } else {
-                    if (task.isSuccessful()) {
-                        Log.i(TAG, "task success");
-                    }
-                    Log.i(TAG, "getLastLocation:exception", task.getException());
-                }
-            }
-        });
     }
 
     private void setListener() {
@@ -197,6 +165,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new InitCurrentLocation(this).execute(fusedLocationProviderClient);
+    }
+
     private void directPain(LatLng originLocation, LatLng targetLocation) {
         String originPosition = "" + originLocation.latitude + "," + originLocation.longitude;
         String destinationPosition = "" + targetLocation.latitude + "," + targetLocation.longitude;
@@ -207,5 +181,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .getParamsString();
         Log.i(TAG, host + params);
         new DrawDirection(this, mMap).execute(host + params);
+    }
+
+    private class InitCurrentLocation extends AsyncTask<FusedLocationProviderClient, Object, Object>{
+        private Context context;
+        InitCurrentLocation(Context context){
+            this.context = context;
+        }
+        /**
+         * 此函数需要额外的时间请求
+         * 所以一般不能直接放在onCreate中或者onMapReady中执行，会导致第一次无法直接定位到CurrentLocation
+         * 此函数只是实现定位目前的经纬度，当地图加载完成后无可正常使用
+         * */
+        private void showCurrentLocation(FusedLocationProviderClient fusedLocationProviderClient) {
+            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        Location location = task.getResult();
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10));
+                    } else {
+                        if (task.isSuccessful()) {
+                            Log.i(TAG, "task success");
+                        }
+                        Log.i(TAG, "getLastLocation:exception", task.getException());
+                    }
+                }
+            });
+        }
+
+        @Override
+        protected Object doInBackground(FusedLocationProviderClient... params) {
+            showCurrentLocation(fusedLocationProviderClient);
+            return null;
+        }
     }
 }
