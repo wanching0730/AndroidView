@@ -26,8 +26,10 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
-    compile 'com.google.android.gms:play-services-maps:10.2.0'
-    compile 'com.google.android.gms:play-services-places:10.2.0'
-    compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.google.android.gms:play-services-maps:11.2.0'
+    compile 'com.google.android.gms:play-services-places:11.2.0'
+    compile 'com.google.android.gms:play-services:11.2.0'
+    compile 'com.google.android.gms:play-services-location:11.2.0'
+    compile 'com.google.code.gson:gson:2.7'
     testCompile 'junit:junit:4.12'
 }

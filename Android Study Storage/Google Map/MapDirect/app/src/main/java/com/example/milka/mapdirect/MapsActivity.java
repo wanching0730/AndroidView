@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -16,7 +18,11 @@ import android.widget.Toast;
 import com.example.milka.mapdirect.utils.DrawDirection;
 import com.example.milka.mapdirect.utils.ParseJson;
 import com.example.milka.mapdirect.utils.ReqParams;
+import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -27,6 +33,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,6 +53,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private PlaceAutocompleteFragment targetAutocompleteFragment;
     private SupportMapFragment mapFragment;
     private Button btnDirect;
+
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     private LatLng originLocation;
     private LatLng targetLocation;
@@ -63,6 +74,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         initView();
         setListener();
         mapFragment.getMapAsync(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        showCurrentLocation(fusedLocationProviderClient);
+    }
+/**
+ * 此函数需要额外的时间请求
+ * 所以一般不能直接放在onCreate中或者onMapReady中执行，会导致第一次无法直接定位到CurrentLocation
+ * 此函数只是实现定位目前的经纬度，当地图加载完成后无可正常使用
+ * */
+    private void showCurrentLocation(FusedLocationProviderClient fusedLocationProviderClient) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                if (task.isSuccessful() && task.getResult() != null) {
+                    Location location = task.getResult();
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10));
+                } else {
+                    if (task.isSuccessful()) {
+                        Log.i(TAG, "task success");
+                    }
+                    Log.i(TAG, "getLastLocation:exception", task.getException());
+                }
+            }
+        });
     }
 
     private void setListener() {
@@ -134,21 +178,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         mMap.setMyLocationEnabled(true);
-        //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(31.174164, 121.418201);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
+        mMap.setBuildingsEnabled(true);
+        mMap.setTrafficEnabled(true);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_direct:
-                if (originLocation != null && targetLocation != null){
+                if (originLocation != null && targetLocation != null) {
                     mMap.clear();
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 16));
-                    directPain(originLocation,targetLocation);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 18));
+                    directPain(originLocation, targetLocation);
                 }
                 break;
             default:
@@ -156,15 +197,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void directPain(LatLng originLocation, LatLng targetLocation){
-        String originPosition = "" + originLocation.latitude +","+ originLocation.longitude;
+    private void directPain(LatLng originLocation, LatLng targetLocation) {
+        String originPosition = "" + originLocation.latitude + "," + originLocation.longitude;
         String destinationPosition = "" + targetLocation.latitude + "," + targetLocation.longitude;
-        String url = DIRECTION_API_URL;
+        String host = DIRECTION_API_URL;
         String params = new ReqParams(originPosition, destinationPosition, GOOGLE_API_KEY)
                 .setLanguage(LANGUAGE_TYPE)
                 .setMode(MODE)
                 .getParamsString();
-        Log.i(TAG, url);
-        new DrawDirection(this, mMap).execute(url);
+        Log.i(TAG, host + params);
+        new DrawDirection(this, mMap).execute(host + params);
     }
 }
